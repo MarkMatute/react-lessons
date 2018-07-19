@@ -26,7 +26,7 @@ const FormField = (props) => {
 
   const validate = (element) => {
     let error = [true, ''];
-    console.log(element.validation);
+    
     // Min Length
     if(element.validation.minLength) {
       const valid = element.value.length >= element.validation.minLength;

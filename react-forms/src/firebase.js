@@ -1,5 +1,8 @@
 import * as firebase from 'firebase';
-const config = {
+var config = {
+  
 };
 firebase.initializeApp(config);
-firebase.database().ref().set('IT WORKS!');
+
+export const firebaseDB = firebase.database();
+
