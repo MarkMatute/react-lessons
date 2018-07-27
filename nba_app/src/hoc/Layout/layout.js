@@ -1,6 +1,8 @@
 import React from 'react';
 import './layout.css';
 import Header from '../../components/Header/header';
+import Footer from '../../components/Footer/footer';
+
 class Layout extends React.Component {
 
   constructor(props) {
@@ -31,7 +33,7 @@ class Layout extends React.Component {
           onShowNav={this.showSideNav.bind(this)}
         />
         {this.props.children}
-        Footer
+        <Footer />
       </div>
     )
   }

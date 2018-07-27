@@ -3,7 +3,6 @@ import {Route, Switch} from 'react-router-dom';
 import Home from './Home/home';
 import Layout from '../hoc/Layout/layout';
 
-
 class Routes extends React.Component {
   render() {
     return (

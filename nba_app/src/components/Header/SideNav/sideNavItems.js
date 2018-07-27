@@ -29,13 +29,13 @@ class SideNavItems extends React.Component {
         },
         {
           type: style.options,
-          icon: 'sign-in',
+          icon: 'user',
           text: 'Sign In',
           link: '/sign-in'
         },
         {
           type: style.options,
-          icon: 'sign-out',
+          icon: 'logout',
           text: 'Sign Out',
           link: '/sign-out'
         }
