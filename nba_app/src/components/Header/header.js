@@ -2,7 +2,7 @@ import React from 'react';
 import style from './header.css';
 import {Link} from 'react-router-dom';
 import FA from 'react-fontawesome';
-import AppSideNav from './sideNav';
+import AppSideNav from './SideNav/sideNav';
 
 class Header extends React.Component {
 

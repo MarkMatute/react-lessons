@@ -1,5 +1,6 @@
 import React from 'react';
 import SideNav from 'react-simple-sidenav';
+import SideNavItems from './sideNavItems';
 
 class AppSideNav extends React.Component {
 
@@ -18,7 +19,8 @@ class AppSideNav extends React.Component {
             background: '#242424',
           }}
         >
-          
+          <SideNavItems />
+
         </SideNav>
       </div>
     )
