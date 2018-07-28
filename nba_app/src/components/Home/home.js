@@ -1,11 +1,11 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import NewsSlider from '../widgets/NewsSlider/newsSlider'; 
 
 class Home extends React.Component {
   render() {
     return (
       <div>
-        Home
+        <NewsSlider />
       </div>
     )
   }
