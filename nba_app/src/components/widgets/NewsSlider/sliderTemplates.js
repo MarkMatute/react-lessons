@@ -11,7 +11,8 @@ class SliderTemplates extends React.Component {
     arrows: false,
     speed: 500,
     slideToShow: 1,
-    slideToScroll: 1
+    slideToScroll: 1,
+    ...this.props.settings
   }
 
   generateTemplate() {
