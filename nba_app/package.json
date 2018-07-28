@@ -40,6 +40,8 @@
     "react-router-dom": "^4.3.1",
     "react-simple-sidenav": "^1.0.1",
     "react-slick": "^0.23.1",
+    "react-transition-group": "^2.4.0",
+    "react-transitions": "^1.0.0",
     "resolve": "1.6.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
