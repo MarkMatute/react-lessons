@@ -11,16 +11,16 @@ class Home extends React.Component {
           start="0"
           take="3"
           settings={{
-            dots: true
+            dots: false
           }}
         />
 
         <NewsList 
           type="card"
           loadmore={true}
-          start={3}
+          start={0}
           amount={3}
-          
+
         />
       </div>
     )
