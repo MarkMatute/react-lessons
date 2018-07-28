@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../../../config';
 import styles from './newsList.css';
+import ActionButton from '../Button/actionButton';
 
 class NewsList extends React.Component {
 
@@ -44,13 +45,22 @@ class NewsList extends React.Component {
       case 'card':
         template = this.state.items.map((item, index) => {
           return (
-            <div key={index}>
-              <div className={styles.newslist_item}>
-                <Link to={`/articles/${item.id}`}>
-                  <h2>{ item.title }</h2>
-                </Link>
+            <CSSTransition
+              classNames={{
+                enter: styles.newslist_wrapper,
+                enterActive: styles.newslist_wrapper_enter
+              }}
+              timeout={500}
+              key={index}
+            >
+              <div>
+                <div className={styles.newslist_item}>
+                  <Link to={`/articles/${item.id}`}>
+                    <h2>{item.title}</h2>
+                  </Link>
+                </div>
               </div>
-            </div>
+            </CSSTransition>
           )
         });
         break;
@@ -63,13 +73,16 @@ class NewsList extends React.Component {
   }
 
   render() {
-    console.log(this.state.items);
     return (
       <div>
-        { this.renderNews(this.props.type) }
-        <div onClick={this.loadMore.bind(this)}>
-          LOAD MORE
-        </div>
+        <TransitionGroup>
+          {this.renderNews(this.props.type)}
+        </TransitionGroup>
+        <ActionButton 
+          type="loadmore"
+          loadMore={()=>this.loadMore()}
+          cta="Load More News"
+        />
       </div>
     )
   }
