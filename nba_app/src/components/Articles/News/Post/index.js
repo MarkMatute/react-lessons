@@ -3,7 +3,6 @@ import axios from 'axios';
 import { API_URL } from '../../../../config';
 import styles from '../../articles.css';
 import Header from './header';
-import Body from './body';
 
 class NewsArticles extends React.Component {
 
@@ -35,6 +34,9 @@ class NewsArticles extends React.Component {
         <div>Loading...</div>
       )
     };
+
+    let { article } = this.state;
+
     return(
       <div className={styles.articleWrapper}>
         <Header 
@@ -42,7 +44,20 @@ class NewsArticles extends React.Component {
           date={this.state.article.date}
           author={this.state.article.author}
         />
-        <Body />
+
+        {/* Article Body */}
+        <div className={styles.articleBody}>
+          <h2>{ article.title }</h2>
+          <div className={styles.articleImage}
+               style={{
+                 background: `url('/images/articles/${article.image}')`
+               }}
+          ></div>
+          <div className={styles.articleText}>
+              { article.body }
+          </div>
+        </div>
+
       </div>
     )
   }
