@@ -27,3 +27,32 @@
   opacity: 1;
   transform: translateX(0%);
 }
+
+.videoListItem_wrapper {
+  display: flex;
+  border: 2px solid #d5d5d5;
+  background: #fff;
+}
+
+.videoListItem_wrapper h2 {
+  font-size: 13px;
+  color: #525252;
+}
+
+.left {
+  background-size: cover !important;
+}
+
+.left div {
+  width: 90px;
+  height: 90px;
+}
+
+.right {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.relatedWrapper{
+  margin: 0 5px;
+}

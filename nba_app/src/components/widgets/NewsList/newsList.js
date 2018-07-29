@@ -81,6 +81,28 @@ class NewsList extends React.Component {
         });
         break;
 
+      case 'cardImage':
+        template = this.state.items.map((item, index) => {
+          return (
+            <Link to={`/articles/${item.id}`} key={index}>
+              <div className={styles.videoListItem_wrapper}>
+                <div className={styles.left}
+                  style={{
+                    background: `url(/images/articles/${item.image})`
+                  }}
+                >
+                  <div></div>
+                </div>
+                <div className={styles.right}>
+                  <CardInfo teams={this.state.teams} team={item.team} date={item.date} un={true} />
+                  <h2>{item.title}</h2>
+                </div>
+              </div>
+            </Link>
+          )
+        });
+        break;
+
       default:
         template = null;
         break;
