@@ -47,7 +47,9 @@ class NewsList extends React.Component {
           items: [
             ...this.state.items,
             ...result.data
-          ]
+          ],
+          start,
+          end
         })
       });
   }
@@ -87,9 +89,6 @@ class NewsList extends React.Component {
   }
 
   render() {
-    console.log(this.state.teams);
-
-
     return (
       <div>
         <TransitionGroup>

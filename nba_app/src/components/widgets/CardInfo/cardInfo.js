@@ -2,13 +2,17 @@ import React from 'react';
 import FA from 'react-fontawesome';
 import styles from './cardInfo.css';
 
-class ReactInfo extends React.Component {
+class CardInfo extends React.Component {
 
-  getTeamName() {
-    const {teams, team} = this.props;
+  constructor(props) {
+    super(props);
+  }
+
+  getTeamName(teams, team) {
     const data = teams.find((item) => {
       return team === item.id;
     });
+    if (!data) return null;
     return data.name;
   }
 
@@ -16,7 +20,7 @@ class ReactInfo extends React.Component {
     return (
       <div className={styles.cardInfo}>
         <span className={styles.teamName}>
-          { this.getTeamName() }
+          { this.getTeamName(this.props.teams, this.props.team) }
         </span>
         <span className={styles.teamDate}>
           <FA name="clock" />
@@ -27,4 +31,4 @@ class ReactInfo extends React.Component {
   }
 }
 
-export default ReactInfo;
+export default CardInfo;
