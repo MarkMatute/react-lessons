@@ -5,12 +5,14 @@ import axios from 'axios';
 import { API_URL } from '../../../config';
 import styles from './newsList.css';
 import ActionButton from '../Button/actionButton';
+import CardInfo from '../CardInfo/cardInfo';
 
 class NewsList extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      teams: [],
       items: [],
       start: this.props.start,
       end: this.props.start + this.props.amount,
@@ -20,15 +22,26 @@ class NewsList extends React.Component {
 
   componentWillMount() {
     const { start, end} = this.state;
-    this.getArticles(start, end);
+    this.getNewsData(start, end);
   }
 
   loadMore() {
-    this.getArticles(this.state.end, this.state.end + this.state.amount);
+    this.getNewsData(this.state.end, this.state.end + this.state.amount);
   }
 
-  getArticles(start, end) {
-    axios.get(`${API_URL}/articles?_start${start}&_end=${end}`)
+  getNewsData(start, end) {
+    // Get News
+    if (this.state.teams && this.state.teams.length < 1) {
+      axios.get(`${API_URL}/teams`)
+        .then((result) => {
+          this.setState({
+            teams: result.data
+          });
+        });
+    }
+
+    // Get Articles
+    axios.get(`${API_URL}/articles?_start=${start}&_end=${end}`)
       .then((result) => {
         this.setState({
           items: [
@@ -56,6 +69,7 @@ class NewsList extends React.Component {
               <div>
                 <div className={styles.newslist_item}>
                   <Link to={`/articles/${item.id}`}>
+                    <CardInfo teams={this.state.teams} team={item.team} date={item.date} />
                     <h2>{item.title}</h2>
                   </Link>
                 </div>
@@ -73,6 +87,9 @@ class NewsList extends React.Component {
   }
 
   render() {
+    console.log(this.state.teams);
+
+
     return (
       <div>
         <TransitionGroup>
