@@ -1,6 +1,7 @@
 import React from 'react';
 import NewsSlider from '../widgets/NewsSlider/newsSlider'; 
 import NewsList from '../widgets/NewsList/newsList';
+import VideoList from '../widgets/VideoList/videoList';
 
 class Home extends React.Component {
   render() {
@@ -20,8 +21,16 @@ class Home extends React.Component {
           loadmore={true}
           start={0}
           amount={3}
-
         />
+
+        <VideoList
+          type="card"
+          title={true}
+          loadmore={false}
+          start={0}
+          amount={3}
+        />
+        
       </div>
     )
   }
