@@ -1,11 +1,10 @@
 import React from 'react';
 import { CSSTransition, TransitionGroup} from 'react-transition-group';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { API_URL } from '../../../config';
 import styles from './newsList.css';
 import ActionButton from '../Button/actionButton';
 import CardInfo from '../CardInfo/cardInfo';
+import { fbTeams, fbArticles, snapShotToObject } from '../../../firebase';
 
 class NewsList extends React.Component {
 
@@ -32,25 +31,28 @@ class NewsList extends React.Component {
   getNewsData(start, end) {
     // Get News
     if (this.state.teams && this.state.teams.length < 1) {
-      axios.get(`${API_URL}/teams`)
-        .then((result) => {
+      fbTeams.once('value')
+        .then((snapshot) => {
+          const teams = snapShotToObject(snapshot);
           this.setState({
-            teams: result.data
+            teams: teams
           });
         });
     }
 
     // Get Articles
-    axios.get(`${API_URL}/articles?_start=${start}&_end=${end}`)
-      .then((result) => {
+    fbArticles
+      .orderByChild('id')
+      .startAt(start)
+      .endAt(end)
+      .once('value')
+      .then((snapshot) => {
+        const articles = snapShotToObject(snapshot);
         this.setState({
-          items: [
-            ...this.state.items,
-            ...result.data
-          ],
-          start,
-          end
-        })
+          items: [...this.state.items, ...articles],
+          start: end,
+          end: this.state.end + this.state.amount
+        });
       });
   }
 
@@ -60,14 +62,14 @@ class NewsList extends React.Component {
       case 'card':
         template = this.state.items.map((item, index) => {
           return (
-            <CSSTransition
+            <div>
               classNames={{
                 enter: styles.newslist_wrapper,
                 enterActive: styles.newslist_wrapper_enter
               }}
               timeout={500}
               key={index}
-            >
+              >
               <div>
                 <div className={styles.newslist_item}>
                   <Link to={`/articles/${item.id}`}>
@@ -76,7 +78,7 @@ class NewsList extends React.Component {
                   </Link>
                 </div>
               </div>
-            </CSSTransition>
+            </div>
           )
         });
         break;
@@ -113,9 +115,7 @@ class NewsList extends React.Component {
   render() {
     return (
       <div>
-        <TransitionGroup>
-          {this.renderNews(this.props.type)}
-        </TransitionGroup>
+        {this.renderNews(this.props.type)}
         <ActionButton 
           type="loadmore"
           loadMore={()=>this.loadMore()}

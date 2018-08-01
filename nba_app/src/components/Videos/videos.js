@@ -9,8 +9,8 @@ class VideosHome extends React.Component {
       <div>
         <NewsSlider
           type="featured"
-          start="0"
-          take="3"
+          start={0}
+          take={3}
           settings={{
             dots: false
           }}

@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './videoList.css';
-import axios from 'axios';
-import {API_URL} from '../../../config';
 import ActionButton from '../Button/actionButton';
 import VideoListTemplate from './videoListTemplate';
+import { fbTeams, fbVideos, snapShotToObject } from '../../../firebase';
 
 class VideoList extends React.Component {
 
@@ -26,25 +25,29 @@ class VideoList extends React.Component {
   getVideosData(start, end) {
 
     // Get Teams
-    axios.get(`${API_URL}/teams`)
-      .then((result) => {
-        this.setState({
-          teams: result.data
+    if (this.state.teams && this.state.teams.length < 1) {
+      fbTeams.once('value')
+        .then((snapshot) => {
+          const teams = snapShotToObject(snapshot);
+          this.setState({
+            teams: teams
+          });
         });
-      });
+    }
 
     // Get Videos
-    axios.get(`${API_URL}/videos?_start=${start}&_end=${end}`)
-      .then((result)=> {
+    fbVideos
+      .orderByChild('id')
+      .startAt(start)
+      .endAt(end)
+      .once('value')
+      .then((snapshot) => {
+        const videos = snapShotToObject(snapshot);
         this.setState({
-          videos: [
-            ...this.state.videos,
-            ...result.data,
-          ],
-          start,
-          end
+          videos: [...this.state.videos, ...videos],
+          start: end,
+          end: this.state.end + this.state.amount
         });
-        console.log(this.state);
       });
   }
 

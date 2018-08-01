@@ -1,6 +1,7 @@
 import React from 'react';
 import FA from 'react-fontawesome';
 import styles from './cardInfo.css';
+import moment from 'moment';
 
 class CardInfo extends React.Component {
 
@@ -10,7 +11,7 @@ class CardInfo extends React.Component {
 
   getTeamName(teams, team) {
     const data = teams.find((item) => {
-      return team === item.id;
+      return team === item.teamId;
     });
     if (!data) return null;
     return data.name;
@@ -24,7 +25,7 @@ class CardInfo extends React.Component {
         </span>
         <span className={styles.teamDate}>
           <FA name="clock" />
-          { this.props.date }
+          {moment(this.props.date).toString() }
         </span>
       </div>
     )

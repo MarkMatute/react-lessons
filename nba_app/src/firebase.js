@@ -1,7 +1,12 @@
 import * as firebase from 'firebase';
 
 const config = {
-
+  apiKey: "AIzaSyA7ql9OrT9UkTyjU1NEncm8kuTN5_nr8WA",
+  authDomain: "nba-fullstack-56e8f.firebaseapp.com",
+  databaseURL: "https://nba-fullstack-56e8f.firebaseio.com",
+  projectId: "nba-fullstack-56e8f",
+  storageBucket: "nba-fullstack-56e8f.appspot.com",
+  messagingSenderId: "455326706091"
 }
 
 // Init App
