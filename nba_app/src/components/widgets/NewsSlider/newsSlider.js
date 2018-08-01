@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import SliderTemplates from './sliderTemplates';
-import { API_URL } from '../../../config';
+import { fbArticles, snapShotToObject } from '../../../firebase';
 
 class NewsSlider extends React.Component {
 
@@ -14,10 +13,13 @@ class NewsSlider extends React.Component {
 
   componentWillMount() {
     const { start, take } = this.props;
-    axios.get(`${API_URL}/articles?_start=${start}&_end=${take}`)
-      .then((result) => {
+    fbArticles
+      .limitToFirst(take)
+      .once('value')
+      .then((snapshot) => {
+        const news = snapShotToObject(snapshot);
         this.setState({
-          news: result.data
+          news: news
         });
       });
   }
