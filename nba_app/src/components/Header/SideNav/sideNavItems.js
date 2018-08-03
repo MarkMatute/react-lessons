@@ -35,7 +35,7 @@ class SideNavItems extends React.Component {
         },
         {
           type: style.options,
-          icon: 'logout',
+          icon: 'cross',
           text: 'Sign Out',
           link: '/sign-out'
         }
