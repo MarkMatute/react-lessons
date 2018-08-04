@@ -1,8 +1,9 @@
 import React from 'react';
 import style from './sideNav.css';
 import FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
- 
+import { Link, withRouter } from 'react-router-dom';
+import { firebase } from '../../../firebase'; 
+
 class SideNavItems extends React.Component {
 
   constructor(props) {
@@ -13,33 +14,78 @@ class SideNavItems extends React.Component {
           type: style.options,
           icon: 'home',
           text: 'Home',
-          link: '/'
+          link: '/',
+          login: ''
         },
         {
           type: style.options,
           icon: 'file',
           text: 'News',
-          link: '/news'
+          link: '/news',
+          login: ''
         },
         {
           type: style.options,
           icon: 'play',
           text: 'Videos',
-          link: '/videos'
+          link: '/videos',
+          login: ''
+        },
+        {
+          type: style.options,
+          icon: 'user',
+          text: 'Dashboard',
+          link: '/dashboard',
+          login: true
         },
         {
           type: style.options,
           icon: 'user',
           text: 'Sign In',
-          link: '/sign-in'
+          link: '/sign-in',
+          login: false
         },
         {
           type: style.options,
           icon: 'cross',
-          text: 'Sign Out',
-          link: '/sign-out'
+          text: `Sign Out`,
+          link: '/sign-out',
+          login: true 
         }
       ]
+    }
+  }
+
+  publicElement(item, i) {
+    return (<Link to={item.link} >
+      <FontAwesome name={item.icon} />
+      {item.text}
+    </Link>)
+  }
+
+  restrictedElement(item, i) {
+    if(!this.props.user) {
+      return;
+    }
+    if(item.link == '/sign-out') {
+      return (
+        <div onClick={()=>{
+          firebase.auth().signOut()
+            .then(() => {
+              this.props.history.push('/');
+            });
+        }}>
+          <FontAwesome name={item.icon} />
+          {item.text}
+        </div>
+      )
+    } else {
+      return (
+        <Link to={item.link} >
+          <FontAwesome name={item.icon} />
+          {item.text}
+        </Link>
+      )
     }
   }
 
@@ -47,10 +93,7 @@ class SideNavItems extends React.Component {
     return this.state.items.map((item, index) => {
       return (
         <div key={index} className={item.type}>
-          <Link to={item.link} >
-            <FontAwesome name={item.icon} />
-            {item.text}
-          </Link>
+          { item.login? this.restrictedElement(item, index): this.publicElement(item, index) }
         </div>
       );
     })
@@ -65,4 +108,4 @@ class SideNavItems extends React.Component {
   }
 }
 
-export default SideNavItems;
+export default withRouter(SideNavItems);

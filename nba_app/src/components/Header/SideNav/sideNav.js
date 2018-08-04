@@ -19,7 +19,7 @@ class AppSideNav extends React.Component {
             background: '#242424',
           }}
         >
-          <SideNavItems />
+          <SideNavItems user={this.props.user}/>
 
         </SideNav>
       </div>

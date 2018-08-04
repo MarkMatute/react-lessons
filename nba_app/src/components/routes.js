@@ -12,7 +12,7 @@ import SignUp from './SignUp/signUp';
 class Routes extends React.Component {
   render() {
     return (
-      <Layout>
+      <Layout user={this.props.user}>
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/news" exact component={NewsHome} />

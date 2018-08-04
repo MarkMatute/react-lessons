@@ -31,6 +31,7 @@ class Layout extends React.Component {
           showNav={this.state.showNav}
           onHideNav={this.hideSideNav.bind(this)}
           onShowNav={this.showSideNav.bind(this)}
+          user={this.props.user}
         />
         {this.props.children}
         <Footer />
