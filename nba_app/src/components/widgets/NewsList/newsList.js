@@ -62,7 +62,7 @@ class NewsList extends React.Component {
       case 'card':
         template = this.state.items.map((item, index) => {
           return (
-            <div>
+            <div
               classNames={{
                 enter: styles.newslist_wrapper,
                 enterActive: styles.newslist_wrapper_enter

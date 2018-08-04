@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-import { API_URL } from '../../../../config';
 import styles from '../../articles.css';
 import Header from './header';
 import VideosRelated from '../../../widgets/VideoList/VideosRelated/videosRelated';
+import { fbVideos, fbTeams, firebaseDb, snapShotToObject } from '../../../../firebase';
 
 class VideoArticles extends React.Component {
 
@@ -18,14 +17,20 @@ class VideoArticles extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(`${API_URL}/videos?id=${this.props.match.params.id}`)
-      .then((result) => {
-        let article = result.data[0];
-        axios.get(`${API_URL}/teams?id=${article.team}`)
-          .then((result) => {
+    firebaseDb
+      .ref(`videos/${this.props.match.params.id}`)
+      .once('value')
+      .then((snapshot) => {
+        const video = snapshot.val();
+        fbTeams
+          .orderByChild('teamId')
+          .equalTo(video.team)
+          .once('value')
+          .then((snapshot) => {
+            const team = snapShotToObject(snapshot);
             this.setState({
-              article: article,
-              team: result.data
+              article: video,
+              team: team
             });
             this.getRelated();
           });
@@ -33,16 +38,23 @@ class VideoArticles extends React.Component {
   }
 
   getRelated() {
-    axios.get(`${API_URL}/teams`)
-      .then((result) => {
-        let teams = result.data;
-        axios.get(`${API_URL}/videos?q=${this.state.team[0].city}&_limit=3`)
-          .then((result) => {
+    fbTeams.once('value')
+      .then((snapshot) => {
+        const teams = snapShotToObject(snapshot);
+
+        fbVideos.orderByChild('team')
+          .equalTo(this.state.article.team)
+          .limitToFirst(3)
+          .once('value')
+          .then((snapshot) => {
+            const related = snapShotToObject(snapshot);
+            console.log(related, 'related');
             this.setState({
               teams: teams,
-              related: result.data
+              related: related
             });
           });
+
       });
   }
   
@@ -54,7 +66,6 @@ class VideoArticles extends React.Component {
     };
 
     let { article, team } = this.state;
-    console.log(article, team);
     return (
       <div>
         <Header teamData={team[0]} />

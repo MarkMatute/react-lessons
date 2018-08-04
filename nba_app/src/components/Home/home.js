@@ -16,7 +16,7 @@ class Home extends React.Component {
           }}
         />
 
-        {/* <NewsList 
+        <NewsList 
           type="card"
           loadmore={true}
           start={0}
@@ -29,7 +29,7 @@ class Home extends React.Component {
           loadmore={true}
           start={0}
           amount={3}
-        /> */}
+        />
         
       </div>
     )

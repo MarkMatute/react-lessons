@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
-import { API_URL } from '../../../../config';
 import styles from '../../articles.css';
 import Header from './header';
+import { fbArticles, fbTeams, firebaseDb, snapShotToObject } from '../../../../firebase'; 
 
 class NewsArticles extends React.Component {
 
@@ -15,15 +14,21 @@ class NewsArticles extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(`${API_URL}/articles?id=${this.props.match.params.id}`)
-      .then((result) => {
-        let article = result.data[0];
-        axios.get(`${API_URL}/teams?id=${article.team}`)
-          .then((result) => {
+    firebaseDb
+      .ref(`articles/${this.props.match.params.id}`)
+      .once('value')
+      .then((snapshot) => {
+        const article = snapshot.val();
+        fbTeams
+          .orderByChild('teamId')
+          .equalTo(article.team)
+          .once('value')
+          .then((snapshot) => {
+            const team = snapShotToObject(snapshot);
             this.setState({
               article: article,
-              team: result.data
-            });
+              team: team
+            })
           });
       });
   }
