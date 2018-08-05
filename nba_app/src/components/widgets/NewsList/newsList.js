@@ -62,14 +62,7 @@ class NewsList extends React.Component {
       case 'card':
         template = this.state.items.map((item, index) => {
           return (
-            <div
-              classNames={{
-                enter: styles.newslist_wrapper,
-                enterActive: styles.newslist_wrapper_enter
-              }}
-              timeout={500}
-              key={index}
-              >
+            <div>
               <div>
                 <div className={styles.newslist_item}>
                   <Link to={`/articles/${item.id}`}>

@@ -8,6 +8,7 @@ import VideoArticles from './Articles/Videos/Video/index';
 import Layout from '../hoc/Layout/layout';
 import SignIn from './SignIn/signIn';
 import SignUp from './SignUp/signUp';
+import Dashnoard from './Dashboard/dashboard';
 
 class Routes extends React.Component {
   render() {
@@ -20,7 +21,8 @@ class Routes extends React.Component {
           <Route path="/articles/:id" exact component={NewsArticles}/>
           <Route path="/videos/:id" exact component={VideoArticles} />
           <Route path="/sign-in" exact component={SignIn} />
-          <Route path="sign-up" exact component={SignUp} />
+          <Route path="/sign-up" exact component={SignUp} />
+          <Route path="/dashboard" exact component={Dashnoard} />
         </Switch>
       </Layout>
     )
